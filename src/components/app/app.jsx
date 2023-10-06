@@ -8,8 +8,11 @@ function App() {
       	margin: "auto",
       	fontSize: "1.5rem"
       }}>
-      	Измените src/components/app/app.jsx и сохраните для обновления.
+      	Здесь будет бургерная Андрюшки-пердушки
+        
       </pre>
+      
+      
     </div>
   );
 }
