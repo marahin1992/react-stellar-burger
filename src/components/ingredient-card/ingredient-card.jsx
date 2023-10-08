@@ -3,6 +3,8 @@ import {
   Counter,
   CurrencyIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
+import {ingredientPropType} from '../../utils/prop-types.js';
+import PropTypes from "prop-types";
 
 function IngredientCard({data}) {
 
@@ -19,6 +21,10 @@ function IngredientCard({data}) {
       
     </article>
   );
+}
+
+IngredientCard.propTypes = {
+  data: ingredientPropType,
 }
 
 export default IngredientCard;
