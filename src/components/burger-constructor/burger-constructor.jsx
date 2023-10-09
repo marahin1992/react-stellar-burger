@@ -10,7 +10,10 @@ import {
 
 function BurgerConstructor() {
 
+  const stuffing = data.filter(item => !(item.type === "bun"));
+
   return (
+    console.log(stuffing),
     <section className={`${styles.burgerConstructor} pt-25 pl-4`}>
       <div className={styles.content}>
         <div className="pr-4">
@@ -24,70 +27,20 @@ function BurgerConstructor() {
           />
         </div>
         <ul className={`${styles.list} custom-scroll pr-4`}>
-          <li className={styles.element}>
+          {
+            stuffing.map((ingredient) =>
+            <li className={styles.element}>
             <DragIcon type="primary" />
             <ConstructorElement
-              text="Соус традиционный галактический"
-              price={15}
-              thumbnail="https://code.s3.yandex.net/react/code/sauce-03.png"
+              text={ingredient.name}
+              price={ingredient.price}
+              thumbnail={ingredient.image}
+              key={ingredient._id}
             />
           </li>
-          <li className={styles.element}>
-            <DragIcon type="primary" />
-            <ConstructorElement
-              text="Сыр с астероидной плесенью"
-              price={4142}
-              thumbnail="https://code.s3.yandex.net/react/code/cheese.png"
-            />
-          </li>
-          <li className={styles.element}>
-            <DragIcon type="primary" />
-            <ConstructorElement
-              text="Соус традиционный галактический"
-              price={15}
-              thumbnail="https://code.s3.yandex.net/react/code/sauce-03.png"
-            />
-          </li>
-          <li className={styles.element}>
-            <DragIcon type="primary" />
-            <ConstructorElement
-              text="Сыр с астероидной плесенью"
-              price={4142}
-              thumbnail="https://code.s3.yandex.net/react/code/cheese.png"
-            />
-          </li>
-          <li className={styles.element}>
-            <DragIcon type="primary" />
-            <ConstructorElement
-              text="Соус традиционный галактический"
-              price={15}
-              thumbnail="https://code.s3.yandex.net/react/code/sauce-03.png"
-            />
-          </li>
-          <li className={styles.element}>
-            <DragIcon type="primary" />
-            <ConstructorElement
-              text="Сыр с астероидной плесенью"
-              price={4142}
-              thumbnail="https://code.s3.yandex.net/react/code/cheese.png"
-            />
-          </li>
-          <li className={styles.element}>
-            <DragIcon type="primary" />
-            <ConstructorElement
-              text="Сыр с астероидной плесенью"
-              price={4142}
-              thumbnail="https://code.s3.yandex.net/react/code/cheese.png"
-            />
-          </li>
-          <li className={styles.element}>
-            <DragIcon type="primary" />
-            <ConstructorElement
-              text="Соус традиционный галактический"
-              price={15}
-              thumbnail="https://code.s3.yandex.net/react/code/sauce-03.png"
-            />
-          </li>
+            )
+          }
+          
         </ul>
         <div className="pr-4">
           <ConstructorElement

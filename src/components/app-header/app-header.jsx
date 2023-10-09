@@ -12,8 +12,8 @@ function AppHeader() {
 
   const linkStyles = 'text text_type_main-default pl-5 pr-5 pb-4 pt-4';
   return (
-    <header className={`${styles.appHeader} p-4`}>
-      <div className={styles.content}>
+    <header className={`${styles.appHeader}`}>
+      <div className={`${styles.content}  p-4`}>
         <nav className={styles.navigation}>
           <a className={`${styles.link} ${linkStyles}`} href="#">
             <BurgerIcon type="primary"/>

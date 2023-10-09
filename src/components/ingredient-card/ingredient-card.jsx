@@ -10,7 +10,7 @@ function IngredientCard({data}) {
 
    return (
     <article className={`${styles.ingredientCard}`}>
-      <img className={`${styles.image}`} src={data.image}/>
+      <img className={`${styles.image}`} src={data.image} alt={data.name}/>
       <div className={styles.price}>
         <p className="text text_type_digits-default">{data.price}</p>
         <CurrencyIcon type="primary" />

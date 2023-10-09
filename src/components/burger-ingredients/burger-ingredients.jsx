@@ -29,7 +29,7 @@ function BurgerIngredients() {
           <h3 className={`${styles.title} text text_type_main-medium pb-6 pt-10`}>Булки</h3>
             <ul className={`${styles.ingredients} pr-4 pl-4`}>
             {
-            buns.map((card, index) => <IngredientCard key={index} data={card}/>
+            buns.map((card) => <IngredientCard key={card._id} data={card}/>
 
             )
             } 
@@ -39,7 +39,7 @@ function BurgerIngredients() {
           <h3 className={`${styles.title} text text_type_main-medium pb-6 pt-10`}>Соусы</h3>
             <ul className={`${styles.ingredients}  pr-4 pl-4`}>
             {
-            sauces.map((card, index) => <IngredientCard key={index} data={card}/>
+            sauces.map((card) => <IngredientCard key={card._id} data={card}/>
 
             )
             } 
@@ -49,7 +49,7 @@ function BurgerIngredients() {
           <h3 className={`${styles.title} text text_type_main-medium pb-6 pt-10`}>Начинки</h3>
             <ul className={`${styles.ingredients}  pr-4 pl-4`}>
             {
-            mains.map((card, index) => <IngredientCard key={index} data={card}/>
+            mains.map((card) => <IngredientCard key={card._id} data={card}/>
 
             )
             } 

@@ -1,4 +1,5 @@
 import React from "react";
+import styles from "./tab-line.module.css";
 
 import { 
   Tab,
@@ -8,7 +9,7 @@ import {
 function TabLine() {
   const [current, setCurrent] = React.useState('one')
   return (
-    <div style={{ display: 'flex' }}>
+    <div className={styles.tabLine}>
       <Tab value="one" active={current === 'one'} onClick={setCurrent}>
         Булки
       </Tab>
