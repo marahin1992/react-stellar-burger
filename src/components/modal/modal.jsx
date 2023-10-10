@@ -1,3 +1,4 @@
+import React from 'react';
 import ReactDOM from 'react-dom';
 import styles from "./modal.module.css";
 import PropTypes from "prop-types";
@@ -12,6 +13,17 @@ import OrderDetails from "../order-details/order-details.jsx";
 const modalRoot = document.getElementById("react-modals");
 
 function Modal({onClose, type, data}) {
+
+    React.useEffect(() => {
+        const close = (evt) => {
+          if(evt.keyCode === 27){
+            onClose()
+          }
+        }
+        window.addEventListener('keydown', close)
+      return () => window.removeEventListener('keydown', close)
+    },[])
+
     return ReactDOM.createPortal(
           (
                 <div className={styles.modalContainer}>
