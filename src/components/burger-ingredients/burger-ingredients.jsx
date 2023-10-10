@@ -1,16 +1,13 @@
+
 import styles from "./burger-ingredients.module.css";
-import { data } from "../../utils/data";
-import { 
-  Logo,
-  BurgerIcon,
-  ListIcon,
-  ProfileIcon,
-} from '@ya.praktikum/react-developer-burger-ui-components';
+
 import TabLine from "../tab-line/tab-line.jsx";
 import IngredientCard from "../ingredient-card/ingredient-card.jsx";
+import PropTypes from "prop-types";
 
 
-function BurgerIngredients() {
+
+function BurgerIngredients({data}) {
 
   const sauces = data.filter(item => item.type === "sauce");
   const buns = data.filter(item => item.type === "bun");
@@ -58,9 +55,14 @@ function BurgerIngredients() {
         
         
       </ul>
-
+      
     </section>
   );
+}
+
+
+BurgerIngredients.propTypes = {
+  data: PropTypes.array,
 }
 
 export default BurgerIngredients;
