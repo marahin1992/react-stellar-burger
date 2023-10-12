@@ -8,19 +8,12 @@ import {
   ConstructorElement,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import Modal from "../modal/modal.jsx";
+import OrderDetails from "../order-details/order-details.jsx";
+import {useModal} from "../../hooks/useModal";
 
 function BurgerConstructor({data}) {
 
-  const[visible, setVisible] = React.useState(false);
-
-  const openModal = () => {
-    setVisible(true);
-  }
-
-  const closeModal = () => {
-    setVisible(false);
-  };
-
+  const { isModalOpen, openModal, closeModal } = useModal();
   const stuffing = data.filter(item => !(item.type === "bun"));
 
   return (
@@ -70,7 +63,10 @@ function BurgerConstructor({data}) {
         <Button htmlType="button" type="primary" size="medium" onClick={openModal}>Оформить заказ</Button>
       </div>
       {
-      visible && <Modal onClose={closeModal} data={data} /> 
+      isModalOpen && 
+      <Modal onClose={closeModal}>
+        <OrderDetails/>
+      </Modal> 
       }
     </section>
   );

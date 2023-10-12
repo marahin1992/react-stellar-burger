@@ -2,21 +2,18 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import styles from "./modal.module.css";
 import PropTypes from "prop-types";
-import {ingredientPropType} from '../../utils/prop-types.js';
 import { 
     CloseIcon,
   } from '@ya.praktikum/react-developer-burger-ui-components';
 import ModalOverlay from "../modal-overlay/modal-overlay.jsx";
-import IngredientDetails from "../ingredient-details/ingredient-details.jsx";
-import OrderDetails from "../order-details/order-details.jsx";
 
 const modalRoot = document.getElementById("react-modals");
 
-function Modal({onClose, type, data}) {
+function Modal({onClose, children}) {
 
     React.useEffect(() => {
         const close = (evt) => {
-          if(evt.keyCode === 27){
+          if(evt.key === 'Escape'){
             onClose()
           }
         }
@@ -31,11 +28,7 @@ function Modal({onClose, type, data}) {
                         <button className={styles.button} onClick={onClose}>
                             <CloseIcon type="primary" />
                         </button>
-                        {
-                            type === 'ingredient' 
-                            ? (<IngredientDetails data={data}/>)
-                            : (<OrderDetails/>)
-                        }
+                        {children}
                     </div>
                     <ModalOverlay onClose={onClose}/>
                 </div>
@@ -46,9 +39,7 @@ function Modal({onClose, type, data}) {
 
 Modal.propTypes = {
     onClose: PropTypes.func,
-    type: PropTypes.string,
-    data: ingredientPropType,
-
+    children: PropTypes.element,
   }
 
 export default Modal;

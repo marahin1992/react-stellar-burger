@@ -5,20 +5,13 @@ import {
   CurrencyIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import {ingredientPropType} from '../../utils/prop-types.js';
-import PropTypes from "prop-types";
 import Modal from "../modal/modal.jsx";
+import IngredientDetails from "../ingredient-details/ingredient-details.jsx";
+import {useModal} from "../../hooks/useModal";
 
 function IngredientCard({data}) {
 
-  const[visible, setVisible] = React.useState(false);
-
-  const openModal = () => {
-    setVisible(true);
-  }
-
-  const closeModal = () => {
-    setVisible(false);
-  };
+  const { isModalOpen, openModal, closeModal } = useModal();
 
    return (
     <>
@@ -34,7 +27,10 @@ function IngredientCard({data}) {
          
       </article>
       {
-        visible && <Modal onClose={closeModal} type={'ingredient'} data={data} /> 
+        isModalOpen && 
+        <Modal onClose={closeModal}>
+          <IngredientDetails data={data}/>
+        </Modal> 
         } 
     </>
     
