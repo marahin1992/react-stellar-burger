@@ -1,19 +1,22 @@
+import React from 'react';
 import styles from "./burger-constructor.module.css";
-import { data } from "../../utils/data";
+import PropTypes from "prop-types";
 import { 
   DragIcon,
   CurrencyIcon,
   Button,
   ConstructorElement,
 } from '@ya.praktikum/react-developer-burger-ui-components';
+import Modal from "../modal/modal.jsx";
+import OrderDetails from "../order-details/order-details.jsx";
+import {useModal} from "../../hooks/useModal";
 
+function BurgerConstructor({data}) {
 
-function BurgerConstructor() {
-
+  const { isModalOpen, openModal, closeModal } = useModal();
   const stuffing = data.filter(item => !(item.type === "bun"));
 
   return (
-    console.log(stuffing),
     <section className={`${styles.burgerConstructor} pt-25 pl-4`}>
       <div className={styles.content}>
         <div className="pr-4">
@@ -29,15 +32,14 @@ function BurgerConstructor() {
         <ul className={`${styles.list} custom-scroll pr-4`}>
           {
             stuffing.map((ingredient) =>
-            <li className={styles.element}>
-            <DragIcon type="primary" />
-            <ConstructorElement
-              text={ingredient.name}
-              price={ingredient.price}
-              thumbnail={ingredient.image}
-              key={ingredient._id}
-            />
-          </li>
+            (<li className={styles.element} key={ingredient._id}>
+              <DragIcon type="primary" />
+              <ConstructorElement
+                text={ingredient.name}
+                price={ingredient.price}
+                thumbnail={ingredient.image}
+              />
+            </li>)
             )
           }
           
@@ -58,10 +60,20 @@ function BurgerConstructor() {
           <p className="text text_type_digits-medium">{200}</p>
           <CurrencyIcon type="primary" />
         </div>
-        <Button htmlType="button" type="primary" size="medium">Оформить заказ</Button>
+        <Button htmlType="button" type="primary" size="medium" onClick={openModal}>Оформить заказ</Button>
       </div>
+      {
+      isModalOpen && 
+      <Modal onClose={closeModal}>
+        <OrderDetails/>
+      </Modal> 
+      }
     </section>
   );
+}
+
+BurgerConstructor.propTypes = {
+  data: PropTypes.array,
 }
 
 export default BurgerConstructor;

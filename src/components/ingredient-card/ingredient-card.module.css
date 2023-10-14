@@ -7,6 +7,10 @@
   width: 100%;
 }
 
+.ingredientCard:hover {
+  cursor: pointer;
+}
+
 .image {
   box-sizing: border-box;
 }
