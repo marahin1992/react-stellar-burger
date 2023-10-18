@@ -1,17 +1,29 @@
-
+import React, {useContext} from "react";
 import styles from "./burger-ingredients.module.css";
 
 import TabLine from "../tab-line/tab-line.jsx";
 import IngredientCard from "../ingredient-card/ingredient-card.jsx";
 import PropTypes from "prop-types";
+import { IngredientContext } from "../../services/appContext.js";
 
 
 
-function BurgerIngredients({data}) {
 
-  const sauces = data.filter(item => item.type === "sauce");
-  const buns = data.filter(item => item.type === "bun");
-  const mains = data.filter(item => item.type === "main");
+function BurgerIngredients() {
+
+  const { ingredients } = useContext(IngredientContext);
+
+  const sauces = React.useMemo(() => {
+    return ingredients.data.filter(item => item.type === "sauce");
+  }, [ingredients]);
+
+  const buns = React.useMemo(() => {
+    return ingredients.data.filter(item => item.type === "bun");
+  }, [ingredients]);
+  
+  const mains = React.useMemo(() => {
+    return ingredients.data.filter(item => item.type === "main");
+  }, [ingredients]);
 
 
 
