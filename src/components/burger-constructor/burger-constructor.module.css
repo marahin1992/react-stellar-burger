@@ -16,6 +16,8 @@
   list-style: none;
   display: flex;
   align-items: center;
+  width: 100%;
+  justify-content: flex-end;
 }
 
 .list {
@@ -26,6 +28,8 @@
   gap: 8px;
   overflow-y: scroll;
   max-height: 45vh;
+  width: 100%;
+  align-items: flex-end;
 }
 
 .price {
@@ -39,4 +43,11 @@
   align-items: center;
   justify-content: end;
   gap: 40px;
+}
+
+.ingredient {
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: flex-end;
 }

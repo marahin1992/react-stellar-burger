@@ -1,4 +1,4 @@
-
+import React, {useContext} from "react";
 import styles from "./burger-ingredients.module.css";
 
 import TabLine from "../tab-line/tab-line.jsx";
@@ -7,7 +7,10 @@ import PropTypes from "prop-types";
 
 
 
+
 function BurgerIngredients({data}) {
+
+  
 
   const sauces = data.filter(item => item.type === "sauce");
   const buns = data.filter(item => item.type === "bun");
