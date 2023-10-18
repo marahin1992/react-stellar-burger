@@ -37,18 +37,14 @@ function BurgerConstructor() {
     constructorData
   ]);
 
-  const handleClick = () => {
-    if (selectedIngredients.length > 0) {
-      const fetchBody = {
-        ingredients: selectedIngredients,
-      }
-      fetch(`https://norma.nomoreparties.space/api/orders`, {
+  const getOrder = (body) => {
+    return fetch(`https://norma.nomoreparties.space/api/orders`, {
         method: 'POST',
         headers: {
           'content-type': 'application/json',
           'charset' : 'utf-8'
         },
-        body: JSON.stringify(fetchBody)
+        body: JSON.stringify(body)
       })
         .then(res => {
           if (res.ok) {
@@ -56,7 +52,14 @@ function BurgerConstructor() {
           }
           return Promise.reject(`Ошибка ${res.status}`);
       })
+  }
 
+  const handleClick = () => {
+    if (selectedIngredients.length > 0) {
+      const fetchBody = {
+        ingredients: selectedIngredients,
+      }      
+      getOrder(fetchBody)
       .then(data => {
         const order = data.order;
         setConstructorData(
