@@ -7,8 +7,8 @@ import {ingredientPropType} from '../../utils/prop-types.js';
 import Modal from "../modal/modal.jsx";
 import IngredientDetails from "./ingredient-details.jsx";
 import {useModal} from "../../hooks/useModal";
-import { useDispatch, useSelector } from 'react-redux';
-import { SET_VIEWED_INGREDIENT } from '../../services/actions';
+import { useDispatch } from 'react-redux';
+import { setViewedIngredient } from '../../services/actions';
 import { useDrag } from "react-dnd";
 
 function IngredientCard({data}) {
@@ -27,10 +27,7 @@ function IngredientCard({data}) {
   const { isModalOpen, openModal, closeModal } = useModal();
 
   const handleClick = () => {
-    dispatch({
-      type: SET_VIEWED_INGREDIENT,
-      ingredient: data
-    })
+    dispatch(setViewedIngredient(data))
     openModal();    
   }
 

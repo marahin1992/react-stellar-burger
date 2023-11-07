@@ -5,7 +5,6 @@ import {
     GET_INGREDIENTS_ERROR,
     ADD_BUN,
     ADD_STUFF,
-    SET_ORDER,
     SET_TAB,
     INCR_COUNTER,
     DECR_COUNTER,
@@ -13,10 +12,13 @@ import {
     DECR_BUN_COUNTER,
     DEL_STUFF,
     MOVE_STUFF,
-    SET_VIEWED_INGREDIENT
+    SET_VIEWED_INGREDIENT,
+    CLEAN_CONSTRUCTOR,
+    RESET_COUNTERS,
+    GET_ORDER_LOADING,
+    GET_ORDER_SUCCESS,
+    GET_ORDER_ERROR
 } from '../actions/index.js'
-
-import uuid from 'react-uuid';
 
 import BunImg from "../../images/bun-01.jpg";
 
@@ -71,6 +73,12 @@ const ingredients = (state = initialIngredients, action) => {
                 )
             };
         }
+        case RESET_COUNTERS: {
+            return {
+                ...state,
+                data: [...state.data].map(item => {return {...item, count: 0}})
+            };
+        }
         default: {
             return state;
         }
@@ -111,7 +119,7 @@ const constructorData = (state = initialConstructorData, action) => {
                     price: action['data']['price'],
                     image: action['data']['image'],
                     _id: action['data']['_id'],
-                    key: uuid()
+                    key: action['data']['key'],
                 }]
             };
         }
@@ -133,6 +141,10 @@ const constructorData = (state = initialConstructorData, action) => {
             };
         }
 
+        case CLEAN_CONSTRUCTOR: {
+            return initialConstructorData;
+        }
+
         default: {
             return state;
         }
@@ -140,16 +152,24 @@ const constructorData = (state = initialConstructorData, action) => {
 }
 
 const initialOrder = {
+    isLoading: false,
+    hasError: false,
     order: null,
 }
 
 const order = (state = initialOrder, action) => {
     switch (action.type) {
-        case SET_ORDER: {
+        case GET_ORDER_LOADING: {
             return {
                 ...state,
-                order: action.order
+                isLoading: true
             };
+        }
+        case GET_ORDER_SUCCESS: {
+            return { ...state, hasError: false, order: action.order, isLoading: false };
+        }
+        case GET_ORDER_ERROR: {
+            return { ...state, hasError: true, isLoading: false };
         }
         default: {
             return state;

@@ -5,8 +5,7 @@ import TabLine from "./tab-line.jsx";
 import IngredientCard from "./ingredient-card.jsx";
 import PropTypes from "prop-types";
 import { useSelector, useDispatch } from "react-redux";
-import { useInView, InView } from 'react-intersection-observer';
-import { SET_TAB } from "../../services/actions";
+import { setTab } from "../../services/actions";
 
 
 
@@ -38,28 +37,17 @@ function BurgerIngredients() {
     }
   }
 
-
-
   function onIngridientViev() {
     const bunCoord = Math.abs(containerRef.current.getBoundingClientRect().top - bunRef.current.getBoundingClientRect().top);
     const sauceCoord = Math.abs(containerRef.current.getBoundingClientRect().top - sauceRef.current.getBoundingClientRect().top);
     const mainCoord = Math.abs(containerRef.current.getBoundingClientRect().top - mainRef.current.getBoundingClientRect().top);
     if (bunCoord < sauceCoord && bunCoord < mainCoord) {
-      dispatch({
-        type: SET_TAB,
-        tab: 'one'
-      });
+      dispatch(setTab('one'));
     } else {
       if (sauceCoord < mainCoord) {
-        dispatch({
-          type: SET_TAB,
-          tab: 'two'
-        });
+        dispatch(setTab('two'));
       } else {
-        dispatch({
-          type: SET_TAB,
-          tab: 'three'
-        });
+        dispatch(setTab('three'));
       }
 
     }

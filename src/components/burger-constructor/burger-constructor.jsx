@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import styles from "./burger-constructor.module.css";
 import PropTypes from "prop-types";
 import {
@@ -11,28 +11,42 @@ import OrderDetails from "./order-details.jsx";
 import { useModal } from "../../hooks/useModal";
 import { useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { DECR_COUNTER, DEL_STUFF, SET_ORDER, MOVE_STUFF } from '../../services/actions';
+import { deleteStuff, moveStuff, addBun, addStuff  } from '../../services/actions';
 import { getOrder } from '../../services/actions/index.js';
-import { useDrop, useDrag } from "react-dnd";
+import { useDrop } from "react-dnd";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import StuffElement from './stuff-element.jsx';
+import Loader from '../loader/loader.jsx';
 
 
 
-function BurgerConstructor({ onDropHandler }) {
+function BurgerConstructor() {
+
+  const constructorData = useSelector(state => state.constructorData);
+
+  const order = useSelector(state => state.order)
+  
+  const dispatch = useDispatch();
+
+  const handleDrop = (item) => {
+    if (item.type == "bun") {
+      const prevBun = constructorData.bun;
+      if (!(prevBun.name === item.name)) {
+        dispatch(addBun(item, prevBun))
+      }
+
+    } else {
+      dispatch(addStuff(item));
+    };
+  }
 
   const [, dropTarget] = useDrop({
     accept: 'ingredient',
     drop(item) {
-      onDropHandler(item);
+      handleDrop(item);
     },
   });
-
-  const constructorData = useSelector(state => state.constructorData);
-
-
-  const dispatch = useDispatch();
 
   const totalPrice = useMemo(() => {
     return constructorData['bun']['price'] * 2 + constructorData['stuff'].reduce((acc, item) => acc + item.price, 0)
@@ -62,27 +76,16 @@ function BurgerConstructor({ onDropHandler }) {
       }
       dispatch(getOrder(fetchBody));
       openModal();
+      
     }
   }
 
   const handleClose = (id, key) => {
-    console.log(key)
-    dispatch({
-      type: DECR_COUNTER,
-      _id: id
-    });
-    dispatch({
-      type: DEL_STUFF,
-      key: key
-    });
+    dispatch(deleteStuff(id, key))
   }
 
   const moveCard = (dragIndex, hoverIndex) => {
-    dispatch({
-      type: MOVE_STUFF,
-      dragIndex: dragIndex,
-      hoverIndex
-    })
+    dispatch(moveStuff(dragIndex, hoverIndex))
   };
 
   return (
@@ -92,7 +95,7 @@ function BurgerConstructor({ onDropHandler }) {
           <ConstructorElement
             type="top"
             isLocked={true}
-            text={constructorData.bun.name}
+            text={`${constructorData.bun.name} (верх)`}
             price={constructorData.bun.price}
             thumbnail={constructorData.bun.image}
           />
@@ -117,7 +120,7 @@ function BurgerConstructor({ onDropHandler }) {
           <ConstructorElement
             type="bottom"
             isLocked={true}
-            text={constructorData.bun.name}
+            text={`${constructorData.bun.name} (низ)`}
             price={constructorData.bun.price}
             thumbnail={constructorData.bun.image}
           />
@@ -133,15 +136,19 @@ function BurgerConstructor({ onDropHandler }) {
       {
         isModalOpen &&
         <Modal onClose={closeModal}>
-          <OrderDetails order={constructorData.order} />
+          {order.isLoading && (<Loader/>)}
+          {order.hasError && (<h3>Произошла ошибка</h3>)}
+          {!order.isLoading &&
+            !order.hasError &&
+            order.order && (
+              <OrderDetails order={constructorData.order} />
+            )}
+          
+          
         </Modal>
       }
     </section>
   );
-}
-
-BurgerConstructor.propTypes = {
-  data: PropTypes.array,
 }
 
 export default BurgerConstructor;

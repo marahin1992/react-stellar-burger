@@ -1,11 +1,10 @@
-import React from "react";
 import styles from "./tab-line.module.css";
 
 import {
   Tab,
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDispatch, useSelector } from "react-redux";
-import { SET_TAB } from "../../services/actions";
+import { setTab } from "../../services/actions";
 
 
 function TabLine({ scrollTo }) {
@@ -16,10 +15,7 @@ function TabLine({ scrollTo }) {
 
   const setCurrent = (e) => {
     scrollTo(e);
-    dispatch({
-      type: SET_TAB,
-      tab: e
-    });
+    dispatch(setTab(e));
   }
 
   return (
