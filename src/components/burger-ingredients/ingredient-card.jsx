@@ -1,4 +1,3 @@
-import React, {useContext} from 'react';
 import styles from "./ingredient-card.module.css";
 import { 
   Counter,
@@ -6,34 +5,40 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import {ingredientPropType} from '../../utils/prop-types.js';
 import Modal from "../modal/modal.jsx";
-import IngredientDetails from "../ingredient-details/ingredient-details.jsx";
+import IngredientDetails from "./ingredient-details.jsx";
 import {useModal} from "../../hooks/useModal";
-import { DataContext, TotalContext } from "../../services/appContext.js";
-
+import { useDispatch } from 'react-redux';
+import { setViewedIngredient } from '../../services/actions';
+import { useDrag } from "react-dnd";
 
 function IngredientCard({data}) {
 
-  const { constructorData, setConstructorData } = useContext(DataContext);
-  const { total, totalDispatch } = useContext(TotalContext);
+  const [{isDrag}, dragRef] = useDrag({
+    type: 'ingredient',
+    item: data,
+    collect: monitor => ({
+        isDrag: monitor.isDragging()
+    })
+});
 
-  const handleClick = () => {
-    if (data.type == "bun") {
-      const prevBun = constructorData.bun;
-      if (!(prevBun.name === data.name)) {
-        setConstructorData(prevState =>{ return {...prevState, bun: data}});
-        totalDispatch({type: "bun", price: data.price, prev: prevBun.price});}
-      
-    } else {
-      setConstructorData(prevState =>{ return {...prevState, stuff: [...prevState.stuff, data]}});
-      totalDispatch({type: "stuff", price: data.price});
-    };
-  }
+
+  const dispatch = useDispatch();
 
   const { isModalOpen, openModal, closeModal } = useModal();
 
+  const handleClick = () => {
+    dispatch(setViewedIngredient(data))
+    openModal();    
+  }
+
+  
+
    return (
     <>
-      <article className={`${styles.ingredientCard}` } onClick={handleClick} >
+      <article className={`${styles.ingredientCard}` } onClick={handleClick} ref={dragRef}>
+        { data.count !== 0
+        ?  (<Counter count={data.count} size="default" extraClass="m-1" className={styles.counter} />)
+        : ""}
         <img className={`${styles.image}`} src={data.image} alt={data.name} />
         <div className={styles.price}>
           <p className="text text_type_digits-default">{data.price}</p>
@@ -47,7 +52,7 @@ function IngredientCard({data}) {
       {
         isModalOpen && 
         <Modal onClose={closeModal}>
-          <IngredientDetails data={data}/>
+          <IngredientDetails/>
         </Modal> 
         } 
     </>

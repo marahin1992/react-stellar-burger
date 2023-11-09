@@ -5,7 +5,7 @@ import PropTypes from "prop-types";
 import { 
     CloseIcon,
   } from '@ya.praktikum/react-developer-burger-ui-components';
-import ModalOverlay from "../modal-overlay/modal-overlay.jsx";
+import ModalOverlay from "./modal-overlay.jsx";
 
 const modalRoot = document.getElementById("react-modals");
 
@@ -39,7 +39,6 @@ function Modal({onClose, children}) {
 
 Modal.propTypes = {
     onClose: PropTypes.func,
-    children: PropTypes.element,
   }
 
 export default Modal;

@@ -1,8 +1,11 @@
 import styles from "./ingredient-details.module.css";
-import {ingredientPropType} from '../../utils/prop-types.js';
+import { useSelector } from "react-redux";
 
 
-function IngredientDetails({data}) {
+function IngredientDetails() {
+
+  const data = useSelector(state => state['viewedIngredient']['ingredient']);
+
   return (
     <div className={`${styles.container} pt-10 pb-15 pr-10 pl-10`}>
       <h2 className={`${styles.modalTitle} text text_type_main-large pt-3 pb-3`}>Детали ингредиента</h2>
@@ -28,10 +31,6 @@ function IngredientDetails({data}) {
       </ul>
     </div>
   )
-}
-
-IngredientDetails.propTypes = {
-  data: ingredientPropType,
 }
 
 export default IngredientDetails;
