@@ -13,13 +13,9 @@ function ProfileNavigation({subtitle}) {
 
     function handleClick() {
       const body = {
-        token: `${localStorage.getItem('refreshToken')} refreshToken`
+        token: `${localStorage.getItem('refreshToken')}`
       }
-      console.log(body);
-      localStorage.removeItem("accessToken");
-      localStorage.removeItem("refreshToken");
-      dispatch(setUser(null));
-      //dispatch(logout(body));
+      dispatch(logout(body));
     }
 
   return (
