@@ -23,6 +23,12 @@
   border-radius: 28px;
   gap: 8px;
   justify-self: end;
+  transition: all, .3s;
+}
+
+.link:hover {
+  opacity: 0.9;
+  background-color: #131316;
 }
 
 

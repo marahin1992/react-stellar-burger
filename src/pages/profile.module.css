@@ -1,0 +1,23 @@
+.main {
+  display: flex;
+  gap: 60px;
+}
+
+.edit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+.help {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.buttons {
+  align-self: flex-end;
+}
+

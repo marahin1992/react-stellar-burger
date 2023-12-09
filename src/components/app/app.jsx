@@ -1,41 +1,68 @@
 import React from 'react';
+import { Routes, Route } from 'react-router-dom';
 import styles from "./app.module.css";
 import AppHeader from "../app-header/app-header.jsx";
-import BurgerConstructor from "../burger-constructor/burger-constructor.jsx";
-import BurgerIngredients from "../burger-ingredients/burger-ingredients.jsx";
 import { useDispatch, useSelector } from 'react-redux';
-import { getIngredients } from '../../services/actions/index.js';
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
+import { OnlyAuth, OnlyUnAuth } from "../protected-route/protected-route.jsx";
+import { checkUserAuth } from '../../services/actions/user';
 import Loader from '../loader/loader.jsx';
+import Home from '../../pages/home.jsx';
+import Login from '../../pages/login.jsx';
+import Register from '../../pages/register.jsx';
+import ForgotPassword from '../../pages/forgot-password.jsx';
+import ResetPassword from '../../pages/reset-password.jsx';
+import Profile from '../../pages/profile.jsx';
+import Page404 from '../../pages/404.jsx';
+import { useLocation, useNavigate } from 'react-router-dom';
+import Modal from '../modal/modal';
+import IngredientDetails from '../burger-ingredients/ingredient-details';
+import { getIngredients } from '../../services/actions/index.js';
+
 
 function App() {
 
-  const ingredients = useSelector(state => state.ingredients);
-  
   const dispatch = useDispatch();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const background = location.state && location.state.background;
+
+  const handleModalClose = () => {
+    // Возвращаемся к предыдущему пути при закрытии модалки
+    navigate(-1);
+  };
 
   React.useEffect(() => {
+    dispatch(checkUserAuth());
     dispatch(getIngredients());
   }, []);
 
-  
-
-  const { data, isLoading, hasError } = ingredients;
   return (
     <div className={styles.app}>
       <AppHeader />
       <main className={`${styles.main} pl-5 pr-5`}>
-        {isLoading && (<Loader/>)}
-        {hasError && (<h3>Произошла ошибка</h3>)}
-        {!isLoading &&
-          !hasError &&
-          data.length > 0 && (
-            <DndProvider backend={HTML5Backend}>
-              <BurgerIngredients />
-              <BurgerConstructor />
-            </DndProvider>
-          )}
+        <Routes location={background || location}>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<OnlyUnAuth component={<Login />} />} />
+          <Route path="/register" element={<OnlyUnAuth component={<Register />} />} />
+          <Route path="/forgot-password" element={<OnlyUnAuth component={<ForgotPassword />} />} />
+          <Route path="/reset-password" element={<OnlyUnAuth component={<ResetPassword />}/>} />
+          <Route path="/profile" element={<OnlyAuth component={<Profile />} />}  />
+          <Route path='/ingredients/:ingredientId' element={<IngredientDetails type="page" />} />
+          <Route path="*" element={<Page404 />} />
+        </Routes>
+
+        {background && (
+          <Routes>
+            <Route
+              path='/ingredients/:ingredientId'
+              element={
+                <Modal onClose={handleModalClose}>
+                  <IngredientDetails type="modal"/>
+                </Modal>
+              }
+            />
+          </Routes>
+        )}
       </main>
     </div>
   );

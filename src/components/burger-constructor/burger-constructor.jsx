@@ -11,13 +11,14 @@ import OrderDetails from "./order-details.jsx";
 import { useModal } from "../../hooks/useModal";
 import { useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteStuff, moveStuff, addBun, addStuff  } from '../../services/actions';
+import { deleteStuff, moveStuff, addBun, addStuff } from '../../services/actions';
 import { getOrder } from '../../services/actions/index.js';
 import { useDrop } from "react-dnd";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import StuffElement from './stuff-element.jsx';
 import Loader from '../loader/loader.jsx';
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -25,8 +26,12 @@ function BurgerConstructor() {
 
   const constructorData = useSelector(state => state.constructorData);
 
-  const order = useSelector(state => state.order)
-  
+  const order = useSelector(state => state.order);
+
+  const user = useSelector((store) => store.user.user);
+
+  const navigate = useNavigate();
+
   const dispatch = useDispatch();
 
   const handleDrop = (item) => {
@@ -70,13 +75,17 @@ function BurgerConstructor() {
   ]);
 
   const handleClick = () => {
+    if (!user) {
+      navigate('/login');
+    }
+
     if (selectedIngredients.length > 0) {
       const fetchBody = {
         ingredients: selectedIngredients,
       }
       dispatch(getOrder(fetchBody));
       openModal();
-      
+
     }
   }
 
@@ -136,15 +145,15 @@ function BurgerConstructor() {
       {
         isModalOpen &&
         <Modal onClose={closeModal}>
-          {order.isLoading && (<Loader/>)}
+          {order.isLoading && (<Loader />)}
           {order.hasError && (<h3>Произошла ошибка</h3>)}
           {!order.isLoading &&
             !order.hasError &&
             order.order && (
               <OrderDetails order={constructorData.order} />
             )}
-          
-          
+
+
         </Modal>
       }
     </section>

@@ -5,29 +5,43 @@ import {
   ListIcon,
   ProfileIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
+import { NavLink , useLocation} from 'react-router-dom';
+
 
 
 function AppHeader() {
 
-  const linkStyles = 'text text_type_main-default pl-5 pr-5 pb-4 pt-4';
+
+  const linkStyles = `${styles.link} text text_type_main-default pl-5 pr-5 pb-4 pt-4`;
   return (
     <header className={`${styles.appHeader}`}>
       <div className={`${styles.content}  p-4`}>
         <nav className={styles.navigation}>
-          <a className={`${styles.link} ${linkStyles}`} href="#">
-            <BurgerIcon type="primary"/>
-            Конструктор
-          </a>
-          <a className={`${styles.link} ${linkStyles} text_color_inactive`} href="#">
-            <ListIcon type="secondary"/>
-            Лента заказов       
-          </a>
+          <NavLink className={linkStyles} to="/">
+            {({ isActive}) => (
+            <>
+              <BurgerIcon type={isActive ? "primary" : "secondary" }/>
+              <p className={ isActive ? "text text_type_main-default" : "text text_type_main-default text_color_inactive"}>Конструктор</p>
+            </>
+    
+  )}
+          </NavLink>
+          <NavLink className={linkStyles} to="/feed">
+            {({ isActive}) => (
+            <>
+              <ListIcon type={isActive ? "primary" : "secondary" }/>
+              <p className={ isActive ? "text text_type_main-default" : "text text_type_main-default text_color_inactive"}>Лента заказов</p>
+            </>)}       
+          </NavLink>
         </nav>
         <Logo />
-        <a className={` ${styles.link} ${linkStyles} text_color_inactive`} href="#">
-          <ProfileIcon type="secondary"/>
-          Личный кабинет
-        </a>
+        <NavLink className={linkStyles} to="/profile">
+          {({ isActive}) => (
+            <>
+              <ProfileIcon type={isActive ? "primary" : "secondary" }/>
+              <p className={ isActive ? "text text_type_main-default" : "text text_type_main-default text_color_inactive"}>Личный кабинет</p>
+            </>)} 
+        </NavLink>
       </div>
     </header>
   );
