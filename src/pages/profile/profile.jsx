@@ -7,9 +7,10 @@ import {
   Button,
   EmailInput
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import ProfileNavigation from '../components/profile-navigation/profile-navigation';
+import ProfileNavigation from '../../components/profile-navigation/profile-navigation';
 import { useState } from "react";
-import { getUser, patchUser } from '../services/actions/user';
+import { patchUser } from '../../services/actions/user';
+import { useForm } from '../../hooks/useForm';
 
 
 function Profile() {
@@ -20,52 +21,52 @@ function Profile() {
 
   const dispatch = useDispatch();
 
-  const [profileForm, setProfileForm] = React.useState({isEdit: false, disabled: true, form:{name:'marah', email:'marahin199@ya.ru', password:''}});
+  const [formValues, handleChange, handleReset, isEdit] = useForm({name:'', email:'', password:''});
+
+  const [disabled, setDisabled] = useState(true);
 
   React.useEffect(() => {
-    setProfileForm({...profileForm, form: {...user, password:''}, isEdit: false});
+    handleReset({...user, password:''});
   },[user]);
 
-  const handleChange = (e) => {
-    setProfileForm({...profileForm, form:{...profileForm.form, [e.target.name]: e.target.value}, isEdit: true })
-  }
 
-  const handleClickSave = () => {
-    dispatch(patchUser(profileForm.form));
+  const handleClickSave = (e) => {
+    e.preventDefault();
+    dispatch(patchUser(formValues));
   }
 
   const handleClickReset = () => {
-    setProfileForm({...profileForm, form: {...user, password:''}, isEdit: false});
+    handleReset({...user, password:''});
   }
 
+  //кастомизация инпута имени профиля
   const handleIconClick = () => {
-    setProfileForm({...profileForm, disabled: false});
-    
+    setDisabled(false);
   }
 
   useEffect(() => {
-    if (!profileForm.disabled) {
+    if (!disabled) {
       nameRef.current.focus();
     }
-  }, [profileForm.disabled])
+  }, [disabled])
 
   const handleOnBlur = () => {
-    setProfileForm({...profileForm, disabled: true});
+    setDisabled(true);
   }
 
   return (
     <main className={`${styles.main} `}>
       <ProfileNavigation subtitle={'В этом разделе вы можете изменить свои персональные данные'} />
-      <div className={`${styles.edit} pt-30`}>
+      <form className={`${styles.edit} pt-30` } onSubmit={handleClickSave}>
         <Input
           type="text"
           placeholder="Имя"
           icon="EditIcon"
           name={'name'}
           extraClass="mb-2"
-          value={profileForm.form.name}
+          value={formValues.name}
           onChange={handleChange}
-          disabled={profileForm.disabled}
+          disabled={disabled}
           onIconClick={handleIconClick}
           ref={nameRef}
           onBlur={handleOnBlur}
@@ -76,16 +77,16 @@ function Profile() {
           placeholder="E-mail"
           isIcon={true}
           extraClass="mb-2"
-          value={profileForm.form.email}
+          value={formValues.email}
           onChange={handleChange}
         />
         <PasswordInput
           name={'password'}
           icon="EditIcon"
-          value={profileForm.form.password}
+          value={formValues.password}
           onChange={handleChange}
         />
-        {profileForm.isEdit && (<div className={styles.buttons}>
+        {isEdit && (<div className={styles.buttons}>
           <Button  
             htmlType="button" 
             type="secondary" 
@@ -95,7 +96,7 @@ function Profile() {
             Отмена
           </Button>
           <Button 
-            htmlType="button" 
+            htmlType="submit" 
             type="primary" 
             size="medium"
             onClick={handleClickSave}
@@ -103,7 +104,7 @@ function Profile() {
             Сохранить
           </Button>
         </div>)}
-      </div>
+      </form>
     </main>
   );
 }

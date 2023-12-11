@@ -21,16 +21,14 @@ function ProfileNavigation({subtitle}) {
   return (
     <div className={`${styles.navigationContainer} pt-30`}>
         <nav className={`${styles.navigation}`}>
-          <NavLink to='/profile' className={({ isActive }) =>
-    [
-      isActive ? `${linkStyle} ${styles.linkActive}` : linkStyle,
-    ].join(" ")}>
+          <NavLink to='/profile' className={({ isActive }) =>    
+       isActive ? `${linkStyle} ${styles.linkActive}` : linkStyle
+    }>
             Профиль
           </NavLink>
           <NavLink to='/profile/orders' className={({ isActive }) =>
-    [
-      isActive ? `${linkStyle} ${styles.linkActive}` : linkStyle,
-    ].join(" ")}>
+      isActive ? `${linkStyle} ${styles.linkActive}` : linkStyle
+    }>
             История заказов
           </NavLink>
           <button className={`${linkStyle} ${styles.button}`} onClick={handleClick} type='button'>

@@ -1,20 +1,21 @@
 import React from 'react';
-import styles from "./login.module.css";
+import styles from "./register.module.css";
 import { useDispatch, useSelector } from 'react-redux';
-import Loader from '../components/loader/loader.jsx';
+import Loader from '../../components/loader/loader.jsx';
 import {
   Input,
   PasswordInput,
-  Button,
-  EmailInput
+  EmailInput,
+  Button
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import TextWithLink from '../components/text-with-link/text-with-link.jsx';
-import { login } from '../services/actions/user';
+import TextWithLink from '../../components/text-with-link/text-with-link.jsx';
+import { register } from '../../services/actions/user';
 
-function Login() {
+function Register() {
 
   const dispatch = useDispatch();
 
+  const [name, setName] = React.useState('');
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
 
@@ -26,23 +27,35 @@ function Login() {
     setPassword(e.target.value);
   }
 
-  const handleClick = (e) => {
+  function handleChangeName(e) {
+    setName(e.target.value);
+  }
+
+  const handleSubmit = (e) => {
     e.preventDefault();
     if (email && password) {
       const body = {
         "email": email,
         "password": password,
+        "name": name,
       }
-      dispatch(login(body));
+      dispatch(register(body));
     }
   }
 
   return (
     <main className={`${styles.main} `}>
-      <form className={`${styles.form} pt-15 pb-20`}>
+      <form className={`${styles.form} pt-15 pb-20`} onSubmit={handleSubmit}>
         <h1 className={`${styles.title} text text_type_main-medium pt-15 `}>
-          Вход
+          Регистрация
         </h1>
+        <Input 
+          type="text" 
+          placeholder="Имя" 
+          name={'name'} 
+          onChange={handleChangeName}
+          value={name}
+        />
         <EmailInput
           name={'email'}
           placeholder="E-mail"
@@ -55,21 +68,15 @@ function Login() {
           value={password}
           onChange={handleChangePassword}
         />
-        <Button 
-          htmlType="submit" 
-          type="primary" 
-          size="medium" 
-          onClick={handleClick}
-        >
-          Войти
+        <Button htmlType="submit" type="primary" size="medium">
+          Зарегистрироваться
         </Button>
       </form>
       <div className={`${styles.help}`}>
-        <TextWithLink text={'Вы новый пользователь?'} link={'/register'} linkText={'Зарегистрироваться'} />
-        <TextWithLink text={'Забыли пароль?'} link={'/forgot-password'} linkText={'Восстановить пароль'} />
+        <TextWithLink text={'Уже зарегистрированы?'} link={'/login'} linkText={'Войти'} />
       </div>
     </main>
   );
 }
 
-export default Login;
+export default Register;
