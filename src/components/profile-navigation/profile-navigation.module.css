@@ -1,0 +1,40 @@
+.navigation {
+  display: flex;
+  flex-direction: column;
+}
+
+.link {
+  text-decoration: none;
+  width: 100%;
+  min-height: 64px;
+  display: flex;
+  align-items: center;
+  transition: all, .3s;
+  
+
+}
+
+.linkActive {
+  color: #F2F2F3;
+}
+
+.link:hover {
+  opacity: .7;
+}
+
+.navigationContainer {
+  max-width: 320px;
+}
+
+.subtitle {
+  opacity: 0.4;
+}
+
+.button {
+  background-color: inherit;
+  border: none;
+}
+
+.button:hover {
+  cursor: pointer;
+}

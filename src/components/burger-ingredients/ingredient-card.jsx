@@ -10,6 +10,7 @@ import {useModal} from "../../hooks/useModal";
 import { useDispatch } from 'react-redux';
 import { setViewedIngredient } from '../../services/actions';
 import { useDrag } from "react-dnd";
+import { useNavigate, Link, useLocation } from "react-router-dom";
 
 function IngredientCard({data}) {
 
@@ -22,20 +23,14 @@ function IngredientCard({data}) {
 });
 
 
-  const dispatch = useDispatch();
-
-  const { isModalOpen, openModal, closeModal } = useModal();
-
-  const handleClick = () => {
-    dispatch(setViewedIngredient(data))
-    openModal();    
-  }
+  const location = useLocation();
 
   
 
+
    return (
-    <>
-      <article className={`${styles.ingredientCard}` } onClick={handleClick} ref={dragRef}>
+    <Link to={`/ingredients/${data._id}`} className={styles.link} state={{ background: location }}>
+      <article className={`${styles.ingredientCard}` } ref={dragRef}>
         { data.count !== 0
         ?  (<Counter count={data.count} size="default" extraClass="m-1" className={styles.counter} />)
         : ""}
@@ -48,14 +43,8 @@ function IngredientCard({data}) {
           {data.name}
         </p>
          
-      </article>
-      {
-        isModalOpen && 
-        <Modal onClose={closeModal}>
-          <IngredientDetails/>
-        </Modal> 
-        } 
-    </>
+      </article> 
+    </Link>
     
   );
 }

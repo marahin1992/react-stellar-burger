@@ -21,6 +21,7 @@ import {
 } from '../actions/index.js'
 
 import BunImg from "../../images/bun-01.jpg";
+import user from './user.js';
 
 //ingredients
 const initialIngredients = {
@@ -218,5 +219,6 @@ export const rootReducer = combineReducers({
     constructorData,
     order,
     tab,
-    viewedIngredient
+    viewedIngredient,
+    user,
 })

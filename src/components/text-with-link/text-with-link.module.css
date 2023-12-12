@@ -1,0 +1,16 @@
+.link {
+  text-decoration: none;
+  
+  color: #4C4CFF;
+  transition: all, .2s;
+}
+
+.link:hover {
+  opacity: 0.7;
+}
+
+.textAndLink {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}

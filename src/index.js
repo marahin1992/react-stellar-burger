@@ -9,6 +9,7 @@ import { rootReducer as reducer } from './services/reducers/index.js';
 import { configureStore } from '@reduxjs/toolkit';
 
 import BunImg from "./images/bun-01.jpg";
+import { BrowserRouter as Router } from "react-router-dom";
 
 
 const preloadedState = {
@@ -49,7 +50,9 @@ const store = configureStore({
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <Router>
+        <App />
+      </Router>
     </Provider>
   </React.StrictMode>,
   document.getElementById("root")
