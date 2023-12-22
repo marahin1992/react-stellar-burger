@@ -2,7 +2,7 @@ import styles from "./order.module.css";
 import {
   FormattedDate
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useNavigate, Link, useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import ImageList from "./image-list";
 import TotalPrice from "../total-price/total-price";
 import Status from "./status";
@@ -16,8 +16,9 @@ function OrderCard({ data, type }) {
   ingredients.pop();
 
   return (
-    <Link to={type === 'profile' ? `/profile/${data.number}` : `/feed/${data.number}`} className={styles.link} state={{ background: location }}>
-      <article className={`${styles.ingredientCard} p-6`}>
+    <li className={styles.listElem}>
+      <Link to={type === 'profile' ? `/profile/${data.number}` : `/feed/${data.number}`} className={styles.link} state={{ background: location }}>
+      <article className={`${styles.orderCard} p-6`}>
         <div className={`${styles.header}`}>
           <p className={`${styles.number} text text_type_digits-default`}>{`#${data.number}`}</p>
           <FormattedDate date={new Date(data.createdAt)} className={`${styles.date} text text_type_main-default text_color_inactive`} />
@@ -30,6 +31,8 @@ function OrderCard({ data, type }) {
         </div>
       </article>
     </Link>
+    </li>
+    
 
   );
 }

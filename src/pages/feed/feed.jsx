@@ -6,11 +6,13 @@ import OrderFeed from '../../components/order-feed/order-feed';
 import OrdersInfo from '../../components/orders-info/orders-info.jsx';
 import { connect as connectOrderFeed, disconnect as disconnectOrderFeed } from "../../services/actions/orders-feed.js";
 import { CheckingOrder } from '../../utils/checkingOrders.js';
+import { ORDERS_FEED_SERVER_URL } from '../../utils/orders-feed.js';
+import LoaderWithCondition from '../../components/loader-with-condition/loader-with-condition.jsx';
 
 
 function Feed() {
 
-  const ORDERS_FEED_SERVER_URL = 'wss://norma.nomoreparties.space/orders/all';
+
 
   const dispatch = useDispatch();
 
@@ -26,16 +28,13 @@ function Feed() {
   const checkedOrders = useMemo(() => data.orders.filter((order) => CheckingOrder(order, ingredients)), [data, ingredients]);
 
   return (
-    <>
-      {status === WebsocketStatus.CONNECTING && (<Loader />)}
-      {connectingError && (<h3>Произошла ошибка</h3>)}
-      {status === WebsocketStatus.ONLINE && (
-        <>
-          <OrderFeed data={checkedOrders} type='all' />
-          <OrdersInfo data={data} orders={checkedOrders}/>
-        </>
-      )}
-    </>
+    <LoaderWithCondition
+      isLoading={status === WebsocketStatus.CONNECTING}
+      error={connectingError}
+      completed={status === WebsocketStatus.ONLINE}>
+      <OrderFeed orders={checkedOrders} type='all' />
+      <OrdersInfo data={data} orders={checkedOrders} />
+    </LoaderWithCondition>
   );
 }
 

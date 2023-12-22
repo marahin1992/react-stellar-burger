@@ -5,7 +5,7 @@ import OrderCard from "./order";
 
 
 
-function OrderFeed({ type, data }) {
+function OrderFeed({ type, orders }) {
 
   const sectionStyle = type === 'profile' ? `${styles.profileOrders} pt-10` : styles.allOrders;
 
@@ -15,7 +15,7 @@ function OrderFeed({ type, data }) {
         Лента заказов
       </h2>)}
       <ul className={`${styles.list} custom-scroll pl-2`}>
-        {data && data.map((order) =>
+        {orders && orders.map((order) =>
           <OrderCard
             key={order.number}
             data={order}
@@ -29,7 +29,7 @@ function OrderFeed({ type, data }) {
 
 OrderFeed.propTypes = {
   type: PropTypes.string , 
-  data: PropTypes.array , 
+  orders: PropTypes.arrayOf(PropTypes.object) , 
 }
 
 export default OrderFeed;

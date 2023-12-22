@@ -18,6 +18,7 @@ import StuffElement from './stuff-element.jsx';
 import Loader from '../loader/loader.jsx';
 import { useNavigate } from 'react-router-dom';
 import TotalPrice from '../total-price/total-price';
+import LoaderWithCondition from '../loader-with-condition/loader-with-condition';
 
 
 
@@ -137,14 +138,15 @@ function BurgerConstructor() {
       {
         isModalOpen &&
         <Modal onClose={closeModal}>
-          {order.isLoading && (<Loader />)}
-          {order.hasError && (<h3>Произошла ошибка</h3>)}
-          {!order.isLoading &&
-            !order.hasError &&
-            order.order && (
-              <OrderDetails order={constructorData.order} />
-            )}
-
+          
+          <LoaderWithCondition
+            isLoading={order.isLoading}
+            error={order.hasError}
+            completed={!order.isLoading &&
+              !order.hasError &&
+              order.order}>
+            <OrderDetails order={constructorData.order} />
+          </LoaderWithCondition>
 
         </Modal>
       }
