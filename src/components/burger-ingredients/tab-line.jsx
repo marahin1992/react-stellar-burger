@@ -5,6 +5,7 @@ import {
 } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDispatch, useSelector } from "react-redux";
 import { setTab } from "../../services/actions";
+import PropTypes from "prop-types";
 
 
 function TabLine({ scrollTo }) {
@@ -31,6 +32,10 @@ function TabLine({ scrollTo }) {
       </Tab>
     </div>
   )
+}
+
+TabLine.propTypes = {
+  scrollTo: PropTypes.func ,  
 }
 
 export default TabLine;

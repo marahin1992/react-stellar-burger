@@ -1,11 +1,11 @@
 import styles from "./app-header.module.css";
-import { 
+import {
   Logo,
   BurgerIcon,
   ListIcon,
   ProfileIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import { NavLink , useLocation} from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 
 
@@ -18,29 +18,29 @@ function AppHeader() {
       <div className={`${styles.content}  p-4`}>
         <nav className={styles.navigation}>
           <NavLink className={linkStyles} to="/">
-            {({ isActive}) => (
-            <>
-              <BurgerIcon type={isActive ? "primary" : "secondary" }/>
-              <p className={ isActive ? "text text_type_main-default" : "text text_type_main-default text_color_inactive"}>Конструктор</p>
-            </>
-    
-  )}
+            {({ isActive }) => (
+              <>
+                <BurgerIcon type={isActive ? "primary" : "secondary"} />
+                <p className={isActive ? "text text_type_main-default" : "text text_type_main-default text_color_inactive"}>Конструктор</p>
+              </>
+
+            )}
           </NavLink>
           <NavLink className={linkStyles} to="/feed">
-            {({ isActive}) => (
-            <>
-              <ListIcon type={isActive ? "primary" : "secondary" }/>
-              <p className={ isActive ? "text text_type_main-default" : "text text_type_main-default text_color_inactive"}>Лента заказов</p>
-            </>)}       
+            {({ isActive }) => (
+              <>
+                <ListIcon type={isActive ? "primary" : "secondary"} />
+                <p className={isActive ? "text text_type_main-default" : "text text_type_main-default text_color_inactive"}>Лента заказов</p>
+              </>)}
           </NavLink>
         </nav>
         <Logo />
         <NavLink className={linkStyles} to="/profile">
-          {({ isActive}) => (
+          {({ isActive }) => (
             <>
-              <ProfileIcon type={isActive ? "primary" : "secondary" }/>
-              <p className={ isActive ? "text text_type_main-default" : "text text_type_main-default text_color_inactive"}>Личный кабинет</p>
-            </>)} 
+              <ProfileIcon type={isActive ? "primary" : "secondary"} />
+              <p className={isActive ? "text text_type_main-default" : "text text_type_main-default text_color_inactive"}>Личный кабинет</p>
+            </>)}
         </NavLink>
       </div>
     </header>

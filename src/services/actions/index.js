@@ -1,5 +1,5 @@
 import uuid from 'react-uuid';
-import { getIngredientsRequest, getOrderRequest } from '../api.js'
+import { getIngredientsRequest, getOrderByNumberRequest, getOrderRequest } from '../api.js'
 //ingredients
 export const GET_INGREDIENTS_LOADING = 'GET_INGREDIENTS_LOADING';
 export const GET_INGREDIENTS_SUCCESS = 'GET_INGREDIENTS_SUCCESS';
@@ -30,6 +30,11 @@ export const RESET_COUNTERS = 'RESET_COUNTERS';
 
 //VIEWED_INGREDIENT
 export const SET_VIEWED_INGREDIENT = 'SET_VIEWED_INGREDIENT';
+
+//selectedOrder
+export const GET_SELECTED_ORDER_LOADING = 'GET_SELECTED_ORDER_LOADING';
+export const GET_SELECTED_ORDER_SUCCESS = 'GET_SELECTED_ORDER_SUCCESS';
+export const GET_SELECTED_ORDER_ERROR = 'GET_SELECTED_ORDER_ERROR';
 
 export function getIngredients() {
   return function (dispatch) {
@@ -149,6 +154,30 @@ export function setViewedIngredient(data) {
     ingredient: data
   }
 }
+
+
+export function getOrderByNumber(number) {
+  return function (dispatch) {
+    dispatch({
+      type: GET_SELECTED_ORDER_LOADING
+    })
+    getOrderByNumberRequest(number)
+      .then(res => {
+        dispatch({
+          type: GET_SELECTED_ORDER_SUCCESS,
+          order: res.orders[0],
+        })
+      })
+      .catch(e => {
+        dispatch({
+          type: GET_SELECTED_ORDER_ERROR
+        })
+        console.log(e);
+      });
+  };
+}
+
+
 
 
 

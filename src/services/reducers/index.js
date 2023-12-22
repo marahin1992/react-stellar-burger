@@ -17,11 +17,16 @@ import {
     RESET_COUNTERS,
     GET_ORDER_LOADING,
     GET_ORDER_SUCCESS,
-    GET_ORDER_ERROR
+    GET_ORDER_ERROR,
+    GET_SELECTED_ORDER_LOADING,
+    GET_SELECTED_ORDER_ERROR,
+    GET_SELECTED_ORDER_SUCCESS
 } from '../actions/index.js'
 
 import BunImg from "../../images/bun-01.jpg";
 import user from './user.js';
+import { OrdersFeedReducer as orderFeed } from './orders-feed.js';
+import { ProfileFeedReducer as profileFeed } from './profile-feed.js';
 
 //ingredients
 const initialIngredients = {
@@ -214,6 +219,32 @@ const viewedIngredient = (state = initialViewedIngredient, action) => {
     }
 }
 
+const initialSelectedOrder = {
+    isLoading: false,
+    hasError: false,
+    order: null,
+}
+
+const selectedOrder = (state = initialSelectedOrder, action) => {
+    switch (action.type) {
+        case GET_SELECTED_ORDER_LOADING: {
+            return {
+                ...state,
+                isLoading: true
+            };
+        }
+        case GET_SELECTED_ORDER_SUCCESS: {
+            return { ...state, hasError: false, order: action.order, isLoading: false };
+        }
+        case GET_SELECTED_ORDER_ERROR: {
+            return { ...state, hasError: true, isLoading: false };
+        }
+        default: {
+            return state;
+        }
+    }
+}
+
 export const rootReducer = combineReducers({
     ingredients,
     constructorData,
@@ -221,4 +252,7 @@ export const rootReducer = combineReducers({
     tab,
     viewedIngredient,
     user,
+    orderFeed,
+    profileFeed,
+    selectedOrder
 })

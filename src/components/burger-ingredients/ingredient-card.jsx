@@ -1,39 +1,34 @@
 import styles from "./ingredient-card.module.css";
-import { 
+import {
   Counter,
   CurrencyIcon,
 } from '@ya.praktikum/react-developer-burger-ui-components';
-import {ingredientPropType} from '../../utils/prop-types.js';
-import Modal from "../modal/modal.jsx";
-import IngredientDetails from "./ingredient-details.jsx";
-import {useModal} from "../../hooks/useModal";
-import { useDispatch } from 'react-redux';
-import { setViewedIngredient } from '../../services/actions';
+import { ingredientPropType } from '../../utils/prop-types.js';
 import { useDrag } from "react-dnd";
-import { useNavigate, Link, useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
-function IngredientCard({data}) {
+function IngredientCard({ data }) {
 
-  const [{isDrag}, dragRef] = useDrag({
+  const [{ isDrag }, dragRef] = useDrag({
     type: 'ingredient',
     item: data,
     collect: monitor => ({
-        isDrag: monitor.isDragging()
+      isDrag: monitor.isDragging()
     })
-});
+  });
 
 
   const location = useLocation();
 
-  
 
 
-   return (
+
+  return (
     <Link to={`/ingredients/${data._id}`} className={styles.link} state={{ background: location }}>
-      <article className={`${styles.ingredientCard}` } ref={dragRef}>
-        { data.count !== 0
-        ?  (<Counter count={data.count} size="default" extraClass="m-1" className={styles.counter} />)
-        : ""}
+      <article className={`${styles.ingredientCard}`} ref={dragRef}>
+        {data.count !== 0
+          ? (<Counter count={data.count} size="default" extraClass="m-1" className={styles.counter} />)
+          : ""}
         <img className={`${styles.image}`} src={data.image} alt={data.name} />
         <div className={styles.price}>
           <p className="text text_type_digits-default">{data.price}</p>
@@ -42,10 +37,10 @@ function IngredientCard({data}) {
         <p className={`${styles.name} text text_type_main-default`}>
           {data.name}
         </p>
-         
-      </article> 
+
+      </article>
     </Link>
-    
+
   );
 }
 
