@@ -145,3 +145,14 @@ export const getOrderRequest = (body) => {
     body: JSON.stringify(body)
   })
 }
+
+export const getOrderByNumberRequest = (number) => {
+  return fetch(`${BASE_URL}/orders/${number}`, {
+    method: 'GET',
+    headers: {
+      'content-type': 'application/json',
+      'charset': 'utf-8'
+    }
+  })
+  .then (res => checkResponse(res));
+}

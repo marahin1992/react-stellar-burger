@@ -1,7 +1,6 @@
 import React from 'react';
 import styles from "./register.module.css";
 import { useDispatch, useSelector } from 'react-redux';
-import Loader from '../../components/loader/loader.jsx';
 import {
   Input,
   PasswordInput,

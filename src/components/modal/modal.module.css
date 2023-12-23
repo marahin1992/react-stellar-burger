@@ -7,6 +7,7 @@
   justify-content: center;
   width: 100vw;
   height: 100vh;
+  z-index: 22;
 }
 
 .modal {
@@ -15,6 +16,7 @@
   border-radius: 40px;
   position: relative;
   z-index: 7;
+  z-index: 25;
 }
 
 .button {

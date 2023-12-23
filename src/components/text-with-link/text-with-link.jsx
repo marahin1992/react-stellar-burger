@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from "./text-with-link.module.css";
 import { Link } from 'react-router-dom';
+import PropTypes from "prop-types";
 
 function TextWithLink({text, link, linkText}) {
 
@@ -14,4 +15,11 @@ function TextWithLink({text, link, linkText}) {
   );
 }
 
+TextWithLink.propTypes = {
+  text: PropTypes.string , 
+  link: PropTypes.string , 
+  linkText: PropTypes.string 
+}
+
 export default TextWithLink;
+

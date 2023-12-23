@@ -1,0 +1,12 @@
+.ingredients {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  padding: 0;
+  padding-right: 24px;
+  margin: 0;
+  max-height: 312px;
+  overflow-y: scroll;
+  gap: 16px;
+  box-sizing: border-box;
+}

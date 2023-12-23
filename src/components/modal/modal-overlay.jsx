@@ -6,12 +6,12 @@ import PropTypes from "prop-types";
 
 
 
-function ModalOverlay({onClose}) {
+function ModalOverlay({ onClose }) {
 
-    return (
-              <div className={styles.modalOverlay} onClick={onClose}>
-              </div>
-            )
+  return (
+    <div className={styles.modalOverlay} onClick={onClose}>
+    </div>
+  )
 }
 
 ModalOverlay.propTypes = {
