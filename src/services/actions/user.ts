@@ -88,12 +88,6 @@ export const checkUserAuth = () => {
   return (dispatch: AppDispatch) => {
     if (localStorage.getItem("accessToken")) {
       dispatch(getUser())
-        /*.catch(() => {
-          localStorage.removeItem("accessToken");
-          localStorage.removeItem("refreshToken");
-          dispatch(setUser(null));
-        })
-        .finally(() => dispatch(setAuthChecked(true)));*/
     } else {
       dispatch(setAuthChecked(true));
     }
