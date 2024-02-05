@@ -73,6 +73,7 @@ function BurgerConstructor() {
   const handleClick = () => {
     if (!user) {
       navigate('/login');
+      return
     }
 
     if (selectedIngredients.length > 2) {

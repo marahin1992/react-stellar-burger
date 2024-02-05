@@ -39,7 +39,14 @@ export const getUser = () => {
   return (dispatch: AppDispatch) => {
     return getUserRequest().then((res) => {
       dispatch(setUser(res.user));
-    });
+    })
+    .catch(() => {
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("refreshToken");
+      dispatch(setUser(null));
+      
+    })
+    .finally(() => dispatch(setAuthChecked(true)));;
   };
 };
 
@@ -47,7 +54,8 @@ export const patchUser = (body: UserDataWithPassword) => {
   return (dispatch: AppDispatch) => {
     return patchUserRequest(body).then((res) => {
       dispatch(setUser(res.user));
-    });
+    })
+    .catch(e => console.log(e));
   };
 };
 
@@ -59,7 +67,7 @@ export const login = (body: LoginData) => {
       localStorage.setItem("refreshToken", res.refreshToken);
       dispatch(setUser(res.user));
       dispatch(setAuthChecked(true));
-    });
+    }).catch(e => console.log(e));
   };
 };
 
@@ -70,23 +78,22 @@ export const register = (body: UserDataWithPassword) => {
       localStorage.setItem("refreshToken", res.refreshToken);
       dispatch(setUser(res.user));
       dispatch(setAuthChecked(true));
-    });
+    }).catch(e => console.log(e));
   };
 };
 
 
 
 export const checkUserAuth = () => {
-  //@ts-ignore
-  return (dispatch) => {
+  return (dispatch: AppDispatch) => {
     if (localStorage.getItem("accessToken")) {
       dispatch(getUser())
-        .catch(() => {
+        /*.catch(() => {
           localStorage.removeItem("accessToken");
           localStorage.removeItem("refreshToken");
           dispatch(setUser(null));
         })
-        .finally(() => dispatch(setAuthChecked(true)));
+        .finally(() => dispatch(setAuthChecked(true)));*/
     } else {
       dispatch(setAuthChecked(true));
     }

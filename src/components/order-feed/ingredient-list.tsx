@@ -1,7 +1,6 @@
 import styles from "./ingredient-list.module.css";
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../services/store';
 import OrderIngredient from "./order-ingredient";
-import PropTypes from "prop-types";
 import { IngredientWithCount } from "../../utils/types";
 
 type IngredientListProps = {
@@ -14,11 +13,11 @@ type ingredientWithAmount = {
 
 
 function IngredientList({ data }: IngredientListProps) {
-  //@ts-ignore
+
   const ingredients = useSelector(state => state.ingredients.data);
 
   const ingredientsAmount = data.reduce((acc: ingredientWithAmount, el) => {
-    //@ts-ignore
+    
     acc[el] = (acc[el] || 0) + 1;
     return acc;
   }, {});
@@ -32,7 +31,7 @@ function IngredientList({ data }: IngredientListProps) {
   return (
     <ul className={`${styles.ingredients} custom-scroll pl-2`}>
       {orderIngredients.map((id, index) => {
-        const ingredient = ingredients.find((item: IngredientWithCount) => item._id == id);
+        const ingredient = ingredients.find((item: IngredientWithCount) => item._id == id)!;
         return (<OrderIngredient
           image={ingredient.image_mobile}
           amount={ingredientsAmount[id]}
@@ -45,8 +44,5 @@ function IngredientList({ data }: IngredientListProps) {
   );
 }
 
-IngredientList.propTypes = {
-  data: PropTypes.array,
-}
 
 export default IngredientList;
